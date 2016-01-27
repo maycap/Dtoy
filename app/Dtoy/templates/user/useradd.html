@@ -1,0 +1,81 @@
+{% extends "user/header.html" %}
+
+{% block content %}
+  <h2>添加新用户</h2>
+    <br>
+
+
+  <div style="padding: 0px 25% 0px 25%; margin:1px 1px 1px 1px;">
+
+    <form action="{{ url_for('user/add') }}" method=post>
+      {{ form.hidden_tag() }}
+
+      <div class="form-group">
+        <div class="col-md-2">
+        {{ form.nickname.label(class="control-label") }}
+        </div>
+        <div class="col-md-10">
+        {{ form.nickname(class="form-control") }}
+        {% for message in form.nickname.errors %}
+          <span class="flash">{{ message }}</span>
+        {% endfor %}
+        <br>
+        </div>
+      </div>
+    
+      <div class="form-group">
+        <div class="col-md-2">
+          {{ form.username.label(class="control-label") }}
+        </div>
+        <div class="col-md-10">
+        {{ form.username(class="form-control")  }}
+        {% for message in form.username.errors %}
+          <span class="flash">{{ message }}</span>
+        {% endfor %}
+        <br>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-2">
+          {{ form.identity.label(class="control-label")}}
+        </div>
+        <div class="col-md-10">
+        {{ form.identity(class="form-control")}}
+        <br>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-2">
+      {{ form.email.label(class="control-label") }}
+      </div>
+        <div class="col-md-10">
+        {{ form.email(class="form-control") }}
+        {% for message in form.email.errors %}
+          <span class="flash">{{ message }}</span>
+        {% endfor %}
+        <br>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-2">
+        {{ form.password.label(class=" control-label") }}
+        </div>
+        <div class="col-md-10">
+        {{ form.password(class="form-control") }}
+        {% for message in form.password.errors %}
+          <span class="flash " >{{ message }}</span>
+        {% endfor %}
+        <br>
+        </div>
+      </div>
+      <center>
+      <div >
+        {{ form.submit(class="btn btn-default ") }}
+        </div>
+        </center>
+    </form>
+  </div>
+{% endblock %}

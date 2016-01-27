@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <center><h1>
+    {% block title %}
+    {% endblock %}
+    </h1></center>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="icon" href="{{url_for('static',filename='img/favicon.ico')}}">
+    {% block otherstatic %}
+    {% endblock %}
+
+  </head>
+  <body>
+
+    <div class="container" id="content">
+      {% block content %}
+      {% endblock %}
+    </div>
+
+  </body>
+</html>

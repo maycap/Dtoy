@@ -1,0 +1,65 @@
+{% extends "user/header.html" %}
+
+{% block fsfunction %}
+  
+  <script type="text/javascript">
+
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+      function deleteuser(uid){
+      $.ajax({
+        type: 'post',
+        url:$SCRIPT_ROOT + '/user/manage',
+        dataType: 'json',
+        data:{
+          'uid':uid
+      },
+
+      error: function(xhr, err){
+        alert('请求失败，原因可能是：' + err + '！')
+      },
+
+      success: function(data, textStatus){
+        // $('#Tip').text(data.result);
+        alert(data.result);
+        // $("#dashboardEr").load('usermanager');
+        window.location.reload();
+        }
+    });
+    return false
+  }
+  </script>
+{% endblock %}
+
+{% block content %}
+
+  <h2 class="sub-header">用户管理</h2>
+  <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>昵称</th>
+            <th>用户名</th>
+            <th>邮箱账户</th>
+            <th>角色</th>
+            <th>状态</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in userlist %}
+          <tr>
+
+              <td>{{ user.nickname }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.identity }}</td>
+              <td><button class="btn btn-primary" onClick=deleteuser({{user.uid}})>删除</button></td>
+
+          </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+
+{% endblock %}

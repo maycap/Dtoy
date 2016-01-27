@@ -1,0 +1,119 @@
+{% extends "deploy/header.html" %}
+
+{% block otherstatic %}
+<script src="{{url_for('static',filename='js/jquery-ui.min.js')}}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.min.css') }}">
+
+{% endblock %}
+
+
+{% block fsfunction %}
+
+<script type="text/javascript">
+monthNames = ['一月','二月','三月','四月','五月','六月', '七月','八月','九月','十月','十一月','十二月']
+
+$(function() {
+
+    $('input[name="start_time"]').datepicker({
+      monthNames:monthNames,
+      dateFormat: 'yy-mm-dd'
+    });
+    $('input[name="end_time"]').datepicker({
+      monthNames:monthNames,
+      dateFormat: 'yy-mm-dd'
+    });
+
+
+    $('#searchlog').bind('click', function(){
+      $('#log_content').html("");
+
+      if ( $('input[name="start_time"]').val() == '' ||  $('input[name="end_time"]').val() == ''){
+         $('input[name="start_time"]').val("");
+         $('input[name="end_time"]').val("");
+      }
+  
+      $.ajax({
+        type: 'post',
+        url:$SCRIPT_ROOT + '/deploy/deploylog',
+        dataType: 'json',
+        data:{
+          appname: $('input[name="appname"]').val(),
+          user: $('input[name="user"]').val(),
+          start_time: $('input[name="start_time"]').val(),
+          end_time: $('input[name="end_time"]').val()
+      },
+
+      error: function(xhr, err){
+        alert('请求失败，原因可能是：' + err + '！')
+      },
+
+      success: function(data, textStatus){
+        // $('#log_content').append('<br>' + $('<div/>').text(data.result).html());
+          // $("#dashboardEr").html(data);
+        var strData = [];
+        for (list in data.result) {   
+          strData.push("<tr>");
+          for ( info in data.result[list]){
+            strData.push("<td>"+data.result[list][info]+"</td>");
+          }
+          strData.push("</tr>");
+        }
+        $("#log_content").html(strData.join(""));
+      }
+
+    });
+    return false
+  });
+});
+
+</script>
+{% endblock %}
+
+{% block content %}
+
+  <h2 class="sub-header">应用打包日志</h2>
+
+  <div style="padding: 0px 10% 0px 10%; margin:1px 1px 1px 1px;">
+
+    <form  method="POST" action='#'>
+
+      <div class="input-group">
+ 
+        <span  class='input-group-addon'>应用名称</span>
+        <input type='text' class="form-control" name='appname' >
+
+        <span  class='input-group-addon'>用户</span>
+        <input type='text' class="form-control" name='user' >
+
+        <span  class='input-group-addon'>开始时间</span>
+        <input type='text' class="form-control" name='start_time' >
+
+        <span  class='input-group-addon'>结束时间</span>
+        <input type='text' class="form-control" name='end_time' >
+
+        <span  class='input-group-btn' >
+          <button id='searchlog' class="btn btn-default" type="submit">查询</button>
+          <!-- <input type="submit"  class="btn btn-default" value="deploy"> -->
+        </span>
+      </div>
+    </form>
+  </div>
+
+  </br>
+
+  <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>应用名</th>
+            <th>打包时间</th>
+            <th>操作者</th>
+          </tr>
+        </thead>
+        <tbody id='log_content'>
+
+      </tbody>
+    </table>
+    </div>
+
+{% endblock %}

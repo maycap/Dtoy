@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+
+{% block header %}
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" >
+    应用服务<span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu ">
+      <li><a href="{{url_for('deploy/deploy')}}" >应用打包</a></li>
+      {% if g.user.identity == '管理员' %}
+      <li><a href="{{url_for('deploy/appinfomanager') }}">应用信息管理</a></li>
+      <li><a href="{{url_for('deploy/appinfoadd') }}">应用信息添加</a></li>
+      {% endif %}
+      <li><a href="{{url_for('deploy/deploylog') }}">应用打包日志</a></li>
+  </ul>
+  </li>
+
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" >
+    {{ g.user }} <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <li><a href="{{url_for('user/profile')}}" >个人中心</a></li>
+      {% if g.user.identity == '管理员' %}
+      <li><a href="{{url_for('user/manage')}}">用户管理</a></li>
+      <li><a href="{{url_for('user/add')}}">用户新增</a></li>
+      {% endif %}
+  </ul>
+  </li>
+  <li><a href="{{ url_for('logout') }}">退出</a></li>
+{% endblock %}
+
+{% block content %}
+  <div class="jumbo">
+    <h2>Profile<h2>
+    <h3>This is {{ g.user }}'s profile page<h3>
+    <!-- <h3>This is {{ session['email'] }}'s profile page<h3> -->
+  </div>
+{% endblock %}

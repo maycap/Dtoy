@@ -1,0 +1,65 @@
+{% extends "deploy/header.html" %}
+
+{% block fsfunction %}
+  
+  <script type="text/javascript">
+
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+      function deleteappinfo(uid){
+      $.ajax({
+        type: 'post',
+        url:$SCRIPT_ROOT + '/deploy/appinfomanager',
+        dataType: 'json',
+        data:{
+          'uid':uid
+      },
+
+      error: function(xhr, err){
+        alert('请求失败，原因可能是：' + err + '！')
+      },
+
+      success: function(data, textStatus){
+        // $('#Tip').text(data.result);
+        alert(data.result);
+        // $("#dashboardEr").load('usermanager');
+        window.location.reload();
+        }
+    });
+    return false
+  }
+  </script>
+{% endblock %}
+
+{% block content %}
+
+  <h2 class="sub-header">应用信息管理</h2>
+  <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>应用名</th>
+            <th>git地址</th>
+            <th>git分支</th>
+            <th>添加者</th>
+            <th>状态</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for appinfo in appinfolist %}
+          <tr>
+
+              <td>{{ appinfo.appname }}</td>
+              <td>{{ appinfo.giturl }}</td>
+              <td>{{ appinfo.branch }}</td>
+              <td>{{ appinfo.submitter }}</td>
+              <td><button class="btn btn-primary" onClick=deleteappinfo({{appinfo.uid}})>删除</button></td>
+
+          </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+
+{% endblock %}

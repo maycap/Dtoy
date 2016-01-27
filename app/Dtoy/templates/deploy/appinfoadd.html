@@ -1,0 +1,71 @@
+{% extends "deploy/header.html" %}
+
+{% block content %}
+  <h2>应用信息添加</h2>
+    <br>
+
+
+  <div style="padding: 0px 25% 0px 25%; margin:1px 1px 1px 1px;">
+
+    <form action="{{ url_for('deploy/appinfoadd') }}" method=post>
+      {{ form.hidden_tag() }}
+
+      <div class="form-group">
+        <div class="col-md-2">
+        {{ form.appname.label(class="control-label") }}
+        </div>
+        <div class="col-md-10">
+        {{ form.appname(class="form-control") }}
+        <br>
+        </div>
+      </div>
+    
+      <div class="form-group">
+        <div class="col-md-2">
+          {{ form.apptype.label(class="control-label") }}
+        </div>
+        <div class="col-md-10">
+        {{ form.apptype(class="form-control")  }}
+        <br>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-2">
+          {{ form.branch.label(class="control-label")}}
+        </div>
+        <div class="col-md-10">
+        {{ form.branch(class="form-control")}}
+        <br>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-md-2">
+          {{ form.typeinfo.label(class="control-label")}}
+        </div>
+        <div class="col-md-10">
+        {{ form.typeinfo(class="form-control")}}
+        <br>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-md-2">
+        {{ form.remarks.label(class=" control-label") }}
+        </div>
+        <div class="col-md-10">
+        {{ form.remarks(class="form-control") }}
+        <br>
+        </div>
+      </div>
+      <center>
+      <div >
+        {{ form.submit(class="btn btn-default ") }}
+        </div>
+        </center>
+    </form>
+  </div>
+{% endblock %}

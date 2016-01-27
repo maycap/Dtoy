@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block header %}
+  <li><a href="{{ url_for('home') }}">返回主页面</a></li>
+  <li><a href="{{ url_for('user/profile') }}">个人中心</a></li>
+  {% if g.user.identity == '管理员' %}
+  <li><a href="{{ url_for('user/manage') }}">用户管理</a></li>
+  <li><a href="{{ url_for('user/add') }}">用户新增</a></li>
+  {% endif %}
+  <li><a href="{{ url_for('logout') }}">退出</a></li>
+{% endblock %}

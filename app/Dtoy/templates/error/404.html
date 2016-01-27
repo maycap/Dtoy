@@ -1,0 +1,9 @@
+{% extends "error_base.html" %}
+
+{% block title %}Page Not Found{% endblock %}
+{% block content %}
+<center>
+  <h3>这是个荒凉的地方，找不到任何东西.</h3>
+  <h3><a href="{{ url_for('home') }}">返回首页</a></h3>
+</center>
+{% endblock %}
